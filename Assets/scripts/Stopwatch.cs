@@ -11,15 +11,13 @@ class StopWatch {
     float pausetime = 0;
     bool paused = true;
 
-    float get() {
+    public float get() {
         var currentamountpaused = 0f;
         if(paused){
             currentamountpaused = Time.time - pausetimestamp;
         }
         return Time.time - starttimestamp - (pausetime + currentamountpaused);
     }
-
-
 
     public void start() {
         paused = false;

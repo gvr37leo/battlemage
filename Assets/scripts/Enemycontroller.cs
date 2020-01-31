@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemycontroller : MonoBehaviour
 {
 
-    public int health = 100;
+    public int health = 1000000;
     public bool isStunned = false;
     public List<Buff> buffs = new List<Buff>();
     public GameObject target;
@@ -16,12 +16,13 @@ public class Enemycontroller : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
+
         StartCoroutine(UpdateNavMeshAgent());
     }
 
     IEnumerator UpdateNavMeshAgent() {
-        while (true) {
+        while (true)
+        {
             agent.SetDestination(target.gameObject.transform.position);
             yield return new WaitForSeconds(0.5f);
         }

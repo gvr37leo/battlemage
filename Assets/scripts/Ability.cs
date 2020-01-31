@@ -22,7 +22,7 @@ public class Ability
     // channelduration:number = 3000
 
 
-    public float cooldownms = 1000;
+    public float cooldownsec = 5;
     public float lastfire = 0;
     public List<Rule> rules = new List<Rule>{
        
@@ -33,7 +33,7 @@ public class Ability
         //ammo rule
         //line of sight rule
     };
-    //stopwatch:StopWatch = new StopWatch()
+    StopWatch stopwatch = new StopWatch();
     public float ventingtime = 0;
     public event Action onCastFinished;
     public int shots = 0;
@@ -46,7 +46,12 @@ public class Ability
 
     //positive if you need to wait 0 or negative if you can call it
     public float timeTillNextPossibleActivation(){
-        return (lastfire + cooldownms) - Time.time;
+        return (lastfire + cooldownsec) - Time.time;
+    }
+
+    public float cooldownPercentComplete()
+    {
+        return timeTillNextPossibleActivation() / cooldownsec;
     }
 
     public bool canActivate() {
@@ -75,11 +80,11 @@ public class Ability
     }
 
     public void Startfire() {
-        if (rules.Any(r => r.cb())) {
+        if (rules.All(r => r.cb())) {
             firing = true;
             ventingtime = 0;
-            //this.stopwatch.start();
-            ventingtime -= this.cooldownms;
+            this.stopwatch.start();
+            ventingtime -= this.cooldownsec;
             shots = 1;
             lastfire = Time.time;
             cb();
@@ -87,10 +92,10 @@ public class Ability
     }
 
     public void Holdfire() {
-        //this.ventingtime += this.stopwatch.get();
-        //this.stopwatch.start();
-        shots = (int)Math.Ceiling(ventingtime / cooldownms);
-        ventingtime -= this.shots * cooldownms;
+        this.ventingtime += this.stopwatch.get();
+        this.stopwatch.start();
+        shots = (int)Math.Ceiling(ventingtime / cooldownsec);
+        ventingtime -= this.shots * cooldownsec;
         lastfire = Time.time;
         if (shots > 0) {
             cb();
@@ -100,7 +105,9 @@ public class Ability
     public Rule createCooldownRule() {
         return new Rule() {
             message = "not ready yet",
-            cb = () => (lastfire + cooldownms) < Time.time,
+            cb = () => {
+                return (lastfire + cooldownsec) < Time.time;
+            }
         };
     }
 }
