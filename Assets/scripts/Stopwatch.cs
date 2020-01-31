@@ -6,43 +6,43 @@ using System.Linq;
 
 class StopWatch {
 
-    float starttimestamp = Time.time;
-    float pausetimestamp = Time.time;
+    float starttimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    float pausetimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     float pausetime = 0;
     bool paused = true;
 
     public float get() {
         var currentamountpaused = 0f;
         if(paused){
-            currentamountpaused = Time.time - pausetimestamp;
+            currentamountpaused = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - pausetimestamp;
         }
-        return Time.time - starttimestamp - (pausetime + currentamountpaused);
+        return DateTimeOffset.UtcNow.ToUnixTimeSeconds() - starttimestamp - (pausetime + currentamountpaused);
     }
 
     public void start() {
         paused = false;
-        starttimestamp = Time.time;
+        starttimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         pausetime = 0;
     }
 
     public void resume(){
         if(paused){
             paused = false;
-            pausetime += Time.time - pausetimestamp;
+            pausetime += DateTimeOffset.UtcNow.ToUnixTimeSeconds() - pausetimestamp;
         }
     }
 
     public void pause() {
         if (paused == false) {
             paused = true;
-            pausetimestamp = Time.time;
+            pausetimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         }
     }
 
     public void reset() {
         paused = true;
-        starttimestamp = Time.time;
-        pausetimestamp = Time.time;
+        starttimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        pausetimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         pausetime = 0;
     }
 }

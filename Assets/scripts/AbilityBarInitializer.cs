@@ -15,7 +15,7 @@ public class AbilityBarInitializer : MonoBehaviour
         {
             var newprefab = Instantiate(abilityUIComponentPrefab);
             newprefab.ability = ability;
-            newprefab.transform.parent = gameObject.transform;
+            newprefab.transform.SetParent(gameObject.transform,true);
 
         }
     }
