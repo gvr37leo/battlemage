@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +12,7 @@ public class Enemycontroller : MonoBehaviour
     public List<Buff> buffs = new List<Buff>();
     public GameObject target;
     private NavMeshAgent agent;
+    public event Action onDeath;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,7 @@ public class Enemycontroller : MonoBehaviour
         health -= 50;
         buffs.Add(new Buff(2, "stunned"));//reset buff
         if(health <= 0) {
+            onDeath();
             Destroy(gameObject);
         }
     }
