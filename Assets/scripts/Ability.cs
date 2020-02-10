@@ -22,6 +22,7 @@ public class Ability
     // channelduration:number = 3000
 
 
+    public string name;
     public float cooldownsec = 5;
     public float lastfire = 0;
     public List<Rule> rules = new List<Rule>{

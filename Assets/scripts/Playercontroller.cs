@@ -34,6 +34,7 @@ public class Playercontroller : MonoBehaviour
     {
         parry = new Ability()
         {
+            name = "parry",
             cooldownsec = 1,
             cb = () => {
                 buffs.Add(new Buff(1, "parry"));
@@ -44,6 +45,7 @@ public class Playercontroller : MonoBehaviour
         var blinkenergycost = 10;
         blink = new Ability()
         {
+            name = "blink",
             cooldownsec = 0.2f,
             cb = () => {
                 var range = 5;
@@ -61,6 +63,7 @@ public class Playercontroller : MonoBehaviour
 
         regen = new Ability()
         {
+            name = "regen",
             cooldownsec = 1,
             cb = () => {
                 energy = 100;
@@ -68,6 +71,7 @@ public class Playercontroller : MonoBehaviour
         };
         melee = new Ability()
         {
+            name = "melee",
             cooldownsec = 1,
             cb = () => {
                 var center = transform.position + transform.forward * 1;
@@ -89,6 +93,7 @@ public class Playercontroller : MonoBehaviour
         };
         ranged = new Ability()
         {
+            name = "ranged",
             cooldownsec = 1,
             cb = () => {
                 var missile = Instantiate(missilePrefab,gameObject.transform.position + gameObject.transform.forward * 1,Quaternion.LookRotation(gameObject.transform.forward,Vector3.up));
@@ -104,7 +109,7 @@ public class Playercontroller : MonoBehaviour
         };
         finisher = new Ability()
         {
-
+            name = "finisher",
         };
 
         abilitys = new List<Ability>() {parry,blink,regen,melee,ranged,finisher };

@@ -62,6 +62,7 @@ public class SpawnManager : MonoBehaviour
         }
         enemys.ForEach(e =>
         {
+            e.target = FindObjectOfType<Playercontroller>().gameObject;
             e.onDeath += () =>
             {
                 deathcount++;
